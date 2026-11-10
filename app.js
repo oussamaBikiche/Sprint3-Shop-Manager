@@ -51,14 +51,15 @@ async function testApi() {
                 AfficherProducts(products)
             }
             
-            productsFiltred = products.filter((product) => product.categoryName == selecteInputValue)
+            productsFiltred = products.filter((product) => product.categoryName == selectInput.value)
             AfficherProducts(productsFiltred)
         })
 
 
     }
 
-function searchProduct(){
+
+    function searchProduct(){
    
      const searchInput=document.getElementById('search-input')
 searchInput.addEventListener('input',()=>{
@@ -70,6 +71,9 @@ searchInput.addEventListener('input',()=>{
    
 }
 searchProduct()
+
+
+
 
 }
 testApi()
