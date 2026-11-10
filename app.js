@@ -51,15 +51,25 @@ async function testApi() {
                 AfficherProducts(products)
             }
             
-            productsFiltred = products.filter((product) => product.categoryName == selectInput.value)
+            productsFiltred = products.filter((product) => product.categoryName == selecteInputValue)
             AfficherProducts(productsFiltred)
         })
 
 
     }
 
+function searchProduct(){
+   
+     const searchInput=document.getElementById('search-input')
+searchInput.addEventListener('input',()=>{
 
-
+ let searchValue=searchInput.value.toLowerCase();
+     let productSearch=products.filter((index)=>index.name.toLowerCase().includes(searchValue))
+    AfficherProducts(productSearch)
+})
+   
+}
+searchProduct()
 
 }
 testApi()
