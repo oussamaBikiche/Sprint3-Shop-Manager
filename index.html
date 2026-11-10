@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <header class=" flex flex-row flex-wrap justify-around space-x-20 bg-fixed bg-gray-300 py-3 sticky">
+        <div class=" flex flex-row">
+            <div>
+                <i class="fa-solid fa-bag-shopping  bg-black 
+text-green-600 py-3 px-3 rounded-xl"></i>
+            </div>
+            <div>
+                <h1 class=" font-bold px-2 py-2"> Shop Manager</h1>
+            </div>
+        </div>
+
+        <div class="border-b-black bg-zinc-50 max-w-xl rounded-br-4xl w-96 h-9 text-left py-1 px-3  rounded-br-2xl ">
+            <i class="fa-brands fa-sistrix"></i>
+            <input type="text" placeholder="search product" class="border-solid  ">
+        </div>
+
+
+    </header>
+    <main class="py-2 ">
+        <div>
+            <p class="text-yellow-950 px-12 py-2  ">INVENTORY</p>
+            <h2 class="px-12 font-bold "> PRODUCT CATALOG </h2>
+        </div>
+        <div class=" flex flex-row  justify-around">
+            <div class=" py-3">
+                <select id="select-input"     class="border-4 border-gray-300 rounded-xl max-w-xl px-10 py-2 bg-white ">
+                    <option value="" disabled selected>Filters </option>
+                    <option value="">All</option>
+                    <option value="">Electronics</option>
+                    <option value="">Clothes</option>
+                    <option value="">Accessories</option>
+                    <option value="">Electronics</option>
+                </select>
+            </div>
+            <div class=" py-3">
+                <select class="border-4 border-gray-300 rounded-xl max-w-xl px-10 py-2 bg-white  ">
+                    <option value="" disabled selected>Featured</option>
+                    <option value="">Price:high to low</option>
+                    <option value="">Price:low to high</option>
+                </select>
+            </div>
+        </div>
+
+        <section id="product" class="grid grid-cols-3 grid-cols-2">
+          <!--  <div id="carte_product" class="  border-4 border-be-8 border-gray-300 rounded-xl  px-5 py-2 bg-white  ">
+                <div id="product_src" class="w-40 h-40">
+                    <img src=" " alt=" ">
+                </div>
+                <div id="categorie" >
+                    <p class="border  rounded-xl w-20 bg-blue-400 text-center">    </p>
+                </div>
+                <div id="product_name" class=" ">
+                    <p class=" ">  </p>
+                </div>
+                <div id="description_product" class="">
+                    <p class="">  </p>
+                </div>
+                <div id="prix" class=" ">
+                    <p class=""> </p>
+                </div>
+            </div>-->
+        </section>
+    </main>
+    <script src="app.js"></script>
+</body>
+
+</html>
