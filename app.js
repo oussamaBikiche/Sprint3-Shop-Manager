@@ -9,33 +9,54 @@ async function testApi() {
 
     const products = await productse.json();
     console.log(products)
-   AfficherProducts()
-   
-    function AfficherProducts() {
-        const productSection = document.getElementById('product')
-        products.forEach((product) => {
+    AfficherProducts(products)
 
-            productSection.innerHTML += `<div id=${product.id} class="  border-4 border-be-8 border-gray-300 rounded-xl  px-5 py-2 bg-white  ">
+    function AfficherProducts(itemsToDisplay) {
+
+        const productSection = document.getElementById('product')
+        productSection.innerHTML = ""
+        itemsToDisplay.forEach((item) => {
+
+            productSection.innerHTML += `<div id=${item.id} class="  border-4 border-be-8 border-gray-300 rounded-xl  px-5 py-2 bg-white  ">
                 <div id="product_src" class="w-40 h-40">
-                    <img src=http://localhost:3000${product.image} alt=" ">
+                    <img src=http://localhost:3000${item.image} alt=" ">
                 </div>
-                <div id= ${product.categoryId}>
-                    <p class="border  rounded-xl w-20 bg-blue-400 text-center">  ${product.categoryName}   </p>
+                <div id= ${item.categoryId}>
+                    <p class="border  rounded-xl w-20 bg-blue-400 text-center">  ${item.categoryName}   </p>
                 </div>
                 <div id="product_name" class=" ">
-                    <p class=" "> ${product.name} </p>
+                    <p class=" "> ${item.name} </p>
                 </div>
                 <div id="description_product" class="">
-                    <p class=""> ${product.description} </p>
+                    <p class=""> ${item.description} </p>
                 </div>
                 <div id="prix" class=" ">
-                    <p class=""> ${product.price} DH</p>
+                    <p class=""> ${item.price} DH</p>
                 </div>
             </div>`
         })
 
- }
+    }
 
+    filtrerCategorie()
+    function filtrerCategorie() {
+        let productsFiltred;
+       
+        const selectInput = document.getElementById('select-input');
+ let selecteInputValue=selectInput.value;
+
+        selectInput.addEventListener('change', () => {
+
+            if (  selecteInputValue== "All" ||  selecteInputValue == "" ) {
+                AfficherProducts(products)
+            }
+            
+            productsFiltred = products.filter((product) => product.categoryName == selectInput.value)
+            AfficherProducts(productsFiltred)
+        })
+
+
+    }
 
 
 
