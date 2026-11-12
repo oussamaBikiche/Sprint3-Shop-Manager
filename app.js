@@ -38,49 +38,163 @@ async function testApi() {
 
     }
 
+    //     filtrerCategorie()
+    //     function filtrerCategorie() {
+    //         let productsFiltred;
+
+    //         const selectInput = document.getElementById('select-input');
+    //         let selecteInputValue = selectInput.value;
+
+    //         selectInput.addEventListener('change', () => {
+
+    //             if (selecteInputValue == "All" || selecteInputValue == "") {
+    //                 AfficherProducts(products)
+    //             }
+
+    //             productsFiltred = products.filter((product) => product.categoryName == selectInput.value)
+    //             AfficherProducts(productsFiltred)
+    //         })
+
+
+    //     }
+
+
+    //     function searchProduct() {
+    //         const message = document.getElementById('message_empty_search')
+    //         message.style.display = 'none'
+    //         const searchInput = document.getElementById('search-input')
+    //         searchInput.addEventListener('input', () => {
+
+    //             let searchValue = searchInput.value.toLowerCase();
+    //             let productSearch = products.filter((index) => index.name.toLowerCase().includes(searchValue))
+    //             if (productSearch.length == 0) {
+    //                 message.style.display = 'block'
+    //             }
+    //             else
+    //                 message.style.display = 'none'
+    //             AfficherProducts(productSearch)
+
+    //         })
+
+    //     }
+    //     searchProduct()
+
+    //     function filtrerPrice(){
+    // const selectPrice=document.getElementById('select-price');
+    // let tabPrice=[...products];
+    // selectPrice.addEventListener('change',()=>{
+
+    // if(selectPrice.value=="default"){
+    // AfficherProducts(products);
+
+    // }
+    //  if(selectPrice.value=="high to low"){
+    //     tabPrice.sort((a,b)=>{
+    //         return b.price-a.price
+    //     })
+    //     AfficherProducts(tabPrice);
+    // }
+    // if(selectPrice.value=="low to high"){ 
+    //     tabPrice.sort((a,b)=>{
+    //         return -b.price-a.price
+    //     })
+    //     AfficherProducts(tabPrice);
+    // }
+
+
+
+
+    // })
+
+    // }
+    // filtrerPrice()
+
+
     filtrerCategorie()
-    function filtrerCategorie() {
-        let productsFiltred;
-       
+    async function filtrerCategorie() {
+
+
         const selectInput = document.getElementById('select-input');
- let selecteInputValue=selectInput.value;
+        selectInput.addEventListener('change', async () => {
 
-        selectInput.addEventListener('change', () => {
+            let selecteInputValue = selectInput.value;
+            if (selecteInputValue == "All" || selecteInputValue == "") {
+                let productsApi = await fetch("http://localhost:3000/api/products");
+                let productsApI = await productsApi.json()
 
-            if (  selecteInputValue== "All" ||  selecteInputValue == "" ) {
-                AfficherProducts(products)
+                AfficherProducts(productsApI)
+
             }
-            
-            productsFiltred = products.filter((product) => product.categoryName == selectInput.value)
-            AfficherProducts(productsFiltred)
+
+            if (selecteInputValue == "Electronics") {
+                let productsApi = await fetch("http://localhost:3000/api/products?categoryId=2");
+                let productsApI = await productsApi.json()
+
+                AfficherProducts(productsApI)
+            }
+
+            if (selecteInputValue == "Books") {
+                let productsApi = await fetch("http://localhost:3000/api/products?categoryId=1");
+                let productsApI = await productsApi.json()
+
+                AfficherProducts(productsApI)
+            }
+
+            if (selecteInputValue == "Kitchen") {
+                let productsApi = await fetch("http://localhost:3000/api/products?categoryId=3");
+                let productsApI = await productsApi.json()
+
+                AfficherProducts(productsApI)
+            }
+
+            if (selecteInputValue == "Outdoor") {
+                let productsApi = await fetch("http://localhost:3000/api/products?categoryId=4");
+                let productsApI = await productsApi.json()
+
+                AfficherProducts(productsApI)
+            }
+
         })
-
-
     }
 
 
-    function searchProduct(){
-   const message=document.getElementById('message_empty_search')
-    message.style.display='none'
-     const searchInput=document.getElementById('search-input')
-searchInput.addEventListener('input',()=>{
+    async function searchProduct() {
+        const message = document.getElementById('message_empty_search')
+        message.style.display = 'none'
+        const searchInput = document.getElementById('search-input')
+        searchInput.addEventListener('input', async () => {
 
- let searchValue=searchInput.value.toLowerCase();
-     let productSearch=products.filter((index)=>index.name.toLowerCase().includes(searchValue))
-   if(productSearch.length==0){
-message.style.display='block'
-   }
-   else 
-      message.style.display='none'
-     AfficherProducts(productSearch)
-     
-})
+            let searchValue = searchInput.value.toLowerCase();
+            let productSearch1 = await fetch(`http://localhost:3000/api/products?search=${searchValue}`)
+            let productSearch = await productSearch1.json();
+            if (productSearch.length == 0) {
+                message.style.display = 'block'
+            }
+            else
+                message.style.display = 'none'
+            AfficherProducts(productSearch)
+
+        })
+
+    }
+    searchProduct()
+
+async function MaxPrice() {
    
+  const priceInpt = document.getElementById('price-inptu');
+    priceInpt.addEventListener('input', async() => {
+      
+    let priceInptValue = +priceInpt.value;
+       
+        let priceApi = await fetch(`http://localhost:3000/api/products?maxPrice=${priceInptValue}`)
+        let Maxprice = await priceApi.json();
+        AfficherProducts(Maxprice);
+    })
+   
+
 }
-searchProduct()
-
-
-
-
+ MaxPrice()
 }
+
+
 testApi()
