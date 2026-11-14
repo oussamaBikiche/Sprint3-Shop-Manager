@@ -10,7 +10,7 @@ async function testApi() {
     const products = await productse.json();
     console.log(products)
     AfficherProducts(products)
-
+    console.log(products)
     function AfficherProducts(itemsToDisplay) {
 
         const productSection = document.getElementById('product')
@@ -32,6 +32,9 @@ async function testApi() {
                 </div>
                 <div id="prix" class=" ">
                     <p class=""> ${item.price} DH</p>
+                </div>
+                <div id="stock" class=" ">
+                <p class=" "> in Stock : ${item.stock} </p>
                 </div>
             </div>`
         })
@@ -118,42 +121,15 @@ async function testApi() {
         selectInput.addEventListener('change', async () => {
 
             let selecteInputValue = selectInput.value;
-            if (selecteInputValue == "All" || selecteInputValue == "") {
-                let productsApi = await fetch("http://localhost:3000/api/products");
-                let productsApI = await productsApi.json()
+        Master()
+  
 
-                AfficherProducts(productsApI)
 
-            }
+        
 
-            if (selecteInputValue == "Electronics") {
-                let productsApi = await fetch("http://localhost:3000/api/products?categoryId=2");
-                let productsApI = await productsApi.json()
-
-                AfficherProducts(productsApI)
-            }
-
-            if (selecteInputValue == "Books") {
-                let productsApi = await fetch("http://localhost:3000/api/products?categoryId=1");
-                let productsApI = await productsApi.json()
-
-                AfficherProducts(productsApI)
-            }
-
-            if (selecteInputValue == "Kitchen") {
-                let productsApi = await fetch("http://localhost:3000/api/products?categoryId=3");
-                let productsApI = await productsApi.json()
-
-                AfficherProducts(productsApI)
-            }
-
-            if (selecteInputValue == "Outdoor") {
-                let productsApi = await fetch("http://localhost:3000/api/products?categoryId=4");
-                let productsApI = await productsApi.json()
-
-                AfficherProducts(productsApI)
-            }
-
+        
+       
+          
         })
     }
 
@@ -163,38 +139,94 @@ async function testApi() {
         message.style.display = 'none'
         const searchInput = document.getElementById('search-input')
         searchInput.addEventListener('input', async () => {
-
-            let searchValue = searchInput.value.toLowerCase();
-            let productSearch1 = await fetch(`http://localhost:3000/api/products?search=${searchValue}`)
-            let productSearch = await productSearch1.json();
-            if (productSearch.length == 0) {
-                message.style.display = 'block'
-            }
-            else
-                message.style.display = 'none'
-            AfficherProducts(productSearch)
-
+Master()
+         
         })
 
     }
     searchProduct()
 
-async function MaxPrice() {
-   
-  const priceInpt = document.getElementById('price-inptu');
-    priceInpt.addEventListener('input', async() => {
-      
-    let priceInptValue = +priceInpt.value;
-       
-        let priceApi = await fetch(`http://localhost:3000/api/products?maxPrice=${priceInptValue}`)
-        let Maxprice = await priceApi.json();
-        AfficherProducts(Maxprice);
+    async function MaxPrice() {
+
+        const priceInpt = document.getElementById('price-inptu');
+        priceInpt.addEventListener('input', async () => {
+Master()
+         
+        })
+
+
+    }
+    MaxPrice()
+
+
+
+    const resetBtn = document.getElementById('reset-btn');
+    resetBtn.addEventListener('click', async () => {
+
+        reset()
+
+        async function reset() {
+
+            const message = document.getElementById('message_empty_search')
+            message.style.display = 'none'
+
+            const response = await fetch("http://localhost:3000/api/reset", {
+                method: "POST"
+            });
+            console.log(response.status)
+
+            if (!response.ok) {
+                const problem = await response.json();
+                console.log("problem is : " + problem.message)
+            }
+            else {
+                const reset = await response.json();
+
+                const productse = await fetch("http://localhost:3000/api/products");
+                const products = await productse.json();
+
+                const priceInpt = document.getElementById('price-inptu');
+                const selectInput = document.getElementById('select-input');
+                const searchInput = document.getElementById('search-input')
+
+                selectInput.value = "";
+                priceInpt.value = "";
+                searchInput.value = "";
+
+                AfficherProducts(products);
+            }
+        }
     })
-   
+
+
+ 
+  async  function Master() {
+        const params = new URLSearchParams()
+
+        const priceInpt = document.getElementById('price-inptu');
+        const selectInput = document.getElementById('select-input');
+        const searchInput = document.getElementById('search-input');
+
+        if (priceInpt.value != "") {
+            params.append('maxPrice', +priceInpt.value);
+            
+        }
+        if (selectInput.value != "") {
+            params.append('categoryId', +selectInput.value);
+        }
+
+        if (searchInput.value != "") {
+            params.append('search', searchInput.value)
+        }
+
+        const master1 = await fetch(`http://localhost:3000/api/products?${params.toString()}`)
+        const master=await master1.json();
+
+AfficherProducts(master)
+    }
 
 }
- MaxPrice()
-}
 
 
-testApi() 
+
+testApi()
