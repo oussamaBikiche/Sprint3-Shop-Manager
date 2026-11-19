@@ -1,5 +1,5 @@
 
-
+let total=0;
 let products = [];
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 async function fetchProducts() {
@@ -259,19 +259,28 @@ product.addEventListener('click', (e) => {
         if (divStock.textContent > 0) {
             divStock.textContent = +divStock.textContent - 1;
         }
-        else
-            return
+        else{
+             return
+        }
+           
+   const totalPrix=document.getElementById('total-prix') 
+   
         function AjouterProducts() {
+
 
             let product = products.find((element) => element.id == butnId)
 console.log(product)
 
-
+total+=product.price;
+totalPrix.textContent="Total Price: "+total;
 
             let recherchePoduct = cart.find((element) => element.id === product.id);
+            
             if (!recherchePoduct) {
                 //add Quantity to product first of push him to cart and affiche in Panier   
                 product.Quantity = 1;
+              
+              
                 cart.push(product);
 
                 localStorage.setItem("cart", JSON.stringify(cart))
@@ -332,7 +341,13 @@ function AfficherProductsInPanier() {
             </div>
             `
 
+
+
+
+   
+
     })
+    
 }
 AfficherProductsInPanier()
 
@@ -345,6 +360,7 @@ viderPanier.addEventListener('click', () => {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     cart = [];
     cart = localStorage.setItem("cart", JSON.stringify(cart));
+    AfficherProductsInPanier();
 })
 //Afficher button vider ou non 
 if(cart.length>0){
@@ -371,20 +387,21 @@ if(cart.length>0){
     confirmer.style.display='block';
 }
 else{
-     confirmer.style.display='none';
+      confirmer.style.display='none';
 }
-   
+  
 
 confirmer.addEventListener('click',()=>{
 const formulair=document.getElementById('formulair');
 formulair.style.display='block';
 })
 
+
 //Envoyer une requête POST /api/reservations par ligne du panier
 const sendRequeteApi=document.getElementById('send-requete-api');
 sendRequeteApi.addEventListener('click',()=>{
 
-async function requete(){
+async function formulClientPOST(){
 cart.forEach(async (item)=>{
 
      const response=await fetch("http://localhost:3000/api/reservations",{
@@ -419,6 +436,29 @@ document.getElementById("ville-input").value="";
 
 
 }
-requete()
-
+formulClientPOST()
 })
+
+
+
+// function totalPrix(){
+//  let total=0;
+//     const totalPrix=document.getElementById('total-prix');
+//     cart.forEach((produit)=>{
+// let foundProduct=cart.find((element)=>element.id==produit.id)
+// if(!foundProduct){
+//     total=produit.price*produit.Quantity;
+    
+    
+// }
+// else{
+//     total+=produit.price;
+    
+// }
+   
+ 
+// totalPrix.textContent=total;
+// })
+
+// }
+//  totalPrix()
